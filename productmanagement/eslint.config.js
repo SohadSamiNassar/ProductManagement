@@ -1,6 +1,6 @@
 import js from '@eslint/js'
 import globals from 'globals'
-import reactHooks from 'eslint-plugin-react-hooks'
+import reactauth from 'eslint-plugin-react-auth'
 import reactRefresh from 'eslint-plugin-react-refresh'
 
 export default [
@@ -17,12 +17,12 @@ export default [
       },
     },
     plugins: {
-      'react-hooks': reactHooks,
+      'react-auth': reactauth,
       'react-refresh': reactRefresh,
     },
     rules: {
       ...js.configs.recommended.rules,
-      ...reactHooks.configs.recommended.rules,
+      ...reactauth.configs.recommended.rules,
       'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
       'react-refresh/only-export-components': [
         'warn',
