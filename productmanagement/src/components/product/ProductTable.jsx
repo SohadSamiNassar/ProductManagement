@@ -20,7 +20,7 @@ export const ProductTable = () => {
             });
         }, 1000);
     };
-    const handleDelete = (key) => {
+    const handleDelete = (recordId) => {
         Swal.fire({
             title: "Are you sure?",
             text: "You won't be able to revert this!",
@@ -31,7 +31,7 @@ export const ProductTable = () => {
             confirmButtonText: "Yes, delete it!"
         }).then((result) => {
             if (result.isConfirmed) {
-                deleteItem(key);
+                deleteItem(recordId);
                
             }
         });
@@ -46,8 +46,8 @@ export const ProductTable = () => {
         setData(JSON.parse(localStorage.getItem('products')) || []);
     }
 
-    const deleteItem = (key) => {
-        setData((lst) => lst.filter((item) => item.key !== key));
+    const deleteItem = (recordId) => {
+        setData((lst) => lst.filter((item) => item.key !== recordId));
         Swal.fire({
             title: "Deleted!",
             text: "Deleted product succssfully.",
