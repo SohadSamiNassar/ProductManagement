@@ -25,14 +25,63 @@ export const CreateOrUpdate = ({ id, onCloseModal, onChangeTable, onSubmitModal 
         description: "",
         shortDescription: "",
         price: 0,
-        img: ""
+        img: {}
     }); 
   
     const handelInput = (event) => {
         const { name, value } = event.target;
         setNewProduct({ ...newProduct, [name]: value });
-        console.log(newProduct);
+       
     }
+
+    const [state, setState ]= useState({
+        file: null,
+        base64URL: ""
+    });
+
+   const getBase64 = (file) => {
+        return new Promise(resolve => {
+            let fileInfo;
+            let baseURL = "";
+            // Make new FileReader
+            let reader = new FileReader();
+
+            // Convert the file to base64 text
+            reader.readAsDataURL(file);
+
+            // on reader load somthing...
+            reader.onload = () => {
+                // Make a fileInfo Object
+                console.log("Called", reader);
+                baseURL = reader.result;
+                console.log(baseURL);
+                resolve(baseURL);
+            };
+            console.log(fileInfo);
+        });
+    };
+
+    const handleFileInputChange = (e) => {
+        let { file } = state;
+        file = e.target.files[0];
+        setNewProduct({ ...newProduct, ["img"]: file });
+        getBase64(file)
+            .then(result => {
+                file["base64"] = result;
+                console.log("File Is", file);
+                setState({
+                    base64URL: result,
+                    file
+                });
+            })
+            .catch(err => {
+                console.log(err);
+            });
+
+        setState({
+            file: e.target.files[0]
+        });
+    };
 
     const handleClose = () => {
         onCloseModal(); 
@@ -42,7 +91,7 @@ export const CreateOrUpdate = ({ id, onCloseModal, onChangeTable, onSubmitModal 
             description: "",
             shortDescription: "",
             price: 0,
-            img: ""
+            img: {}
         }); 
     }
 
@@ -89,8 +138,8 @@ export const CreateOrUpdate = ({ id, onCloseModal, onChangeTable, onSubmitModal 
                 </Form.Item>
 
                 <Form.Item label="Photo" valuePropName="fileList" getValueFromEvent={normFile}>
-                    <Upload action="/upload.do" listType="picture-card">
-                        <button
+                    <Upload action="/upload" listType="picture-card">
+                        <button 
                             style={{
                                 color: 'inherit',
                                 cursor: 'inherit',
@@ -110,7 +159,9 @@ export const CreateOrUpdate = ({ id, onCloseModal, onChangeTable, onSubmitModal 
                         </button>
                     </Upload>
                 </Form.Item>
-
+                <div>
+                    <input type="file" name="file" onChange={handleFileInputChange} />
+                </div>
                 <Form.Item label="Price">
                     <InputNumber name="price" value={newProduct.price} onChange={price => handelInput({ target: { value: price, name: 'price' } })} />
                 </Form.Item>

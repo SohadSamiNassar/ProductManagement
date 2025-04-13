@@ -1,16 +1,30 @@
-import * as React from "react"; 
+import {React , useState} from "react"; 
+import { useNavigate } from "react-router-dom";
 import { Button, Checkbox, Form, Input, Card } from 'antd';
+import PropTypes from 'prop-types';
 import { useAuth } from "../auth/useAuth";
+async function loginUser(credentials) {
+    return  fetch('https://dummyjson.com/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(credentials),
+    })
+        .then(res => res.json())
+        .then(console.log);
+}
 
-export const LoginPage = () => {
-    const { login } = useAuth();
+export const LoginPage = ({ setToken }) => {
+    const [username, setUserName] = useState();
+    const [password, setPassword] = useState();
+    const navigate = useNavigate();
 
     const onFinish = (event) => { 
-        const data = new FormData(event.currentTarget);
-        login({
-            email: data.get("email"),
-            password: data.get("password")
+        const token =  loginUser({
+            username,
+            password
         });
+        setToken(token);
+        navigate("/settings");
     };
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
@@ -41,7 +55,7 @@ export const LoginPage = () => {
                             },
                         ]}
                     >
-                        <Input />
+                        <Input onChange={e => setUserName(e.target.value)} />
                     </Form.Item>
 
                     <Form.Item
@@ -54,7 +68,7 @@ export const LoginPage = () => {
                             },
                         ]}
                     >
-                        <Input.Password />
+                        <Input.Password onChange={e => setPassword(e.target.value)} />
                     </Form.Item>
 
                     <Form.Item name="remember" valuePropName="checked" label={null}>
@@ -73,6 +87,9 @@ export const LoginPage = () => {
         
     );
 };
+LoginPage.propTypes = {
+    setToken: PropTypes.func.isRequired
+}
 
 
  
