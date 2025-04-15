@@ -10,13 +10,18 @@ import "./App.css";
 
  
 export default function App() {
-    const { token, setToken } = useToken();
+    //const { token, setToken } = useToken();
 
-    if (!token) {
-        return <LoginPage setToken={setToken} />
-    }
+    //if (!token) {
+    //    return <LoginPage setToken={setToken} />
+    //}
     return (
         <Routes> 
+            <Route element={<HomeLayout />}>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/login" element={<LoginPage />} />
+            </Route>
+
             <Route path="/dashboard" element={<DashboardLayout />}>
                 <Route path="settings" element={<SettingsPage />} />
                 <Route path="Product" element={<ProductTable />} />

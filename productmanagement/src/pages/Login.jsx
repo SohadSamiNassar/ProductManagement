@@ -3,29 +3,33 @@ import { useNavigate } from "react-router-dom";
 import { Button, Checkbox, Form, Input, Card } from 'antd';
 import PropTypes from 'prop-types';
 import { useAuth } from "../auth/useAuth";
-async function loginUser(credentials) {
-    return  fetch('https://dummyjson.com/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(credentials),
-    })
-        .then(res => res.json())
-        .then(console.log);
-}
 
-export const LoginPage = ({ setToken }) => {
+
+export const LoginPage = () => {
     const [username, setUserName] = useState();
     const [password, setPassword] = useState();
-    const navigate = useNavigate();
+    //const navigate = useNavigate();
 
-    const onFinish = (event) => { 
-        const token =  loginUser({
+    //const onFinish = (event) => {
+    //    const token =  loginUser({
+    //        username,
+    //        password
+    //    });
+    //    setToken(token);
+    //    navigate("/settings");
+    //};
+
+
+    const { login } = useAuth();
+
+    const onFinish = (event) => {
+        const data = new FormData(event.currentTarget);
+        login({
             username,
             password
         });
-        setToken(token);
-        navigate("/settings");
     };
+
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
     };
@@ -87,9 +91,9 @@ export const LoginPage = ({ setToken }) => {
         
     );
 };
-LoginPage.propTypes = {
-    setToken: PropTypes.func.isRequired
-}
+//LoginPage.propTypes = {
+//    setToken: PropTypes.func.isRequired
+//}
 
 
  
