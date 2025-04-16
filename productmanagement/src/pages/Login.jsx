@@ -1,25 +1,11 @@
 import {React , useState} from "react"; 
-import { useNavigate } from "react-router-dom";
 import { Button, Checkbox, Form, Input, Card } from 'antd';
-import PropTypes from 'prop-types';
 import { useAuth } from "../auth/useAuth";
 
 
 export const LoginPage = () => {
     const [username, setUserName] = useState();
-    const [password, setPassword] = useState();
-    //const navigate = useNavigate();
-
-    //const onFinish = (event) => {
-    //    const token =  loginUser({
-    //        username,
-    //        password
-    //    });
-    //    setToken(token);
-    //    navigate("/settings");
-    //};
-
-
+    const [password, setPassword] = useState(); 
     const { login } = useAuth();
 
     const onFinish = (event) => {
