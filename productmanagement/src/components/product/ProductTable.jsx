@@ -18,7 +18,7 @@ export const ProductTable = () => {
                 message: 'Success',
                 description: m,
             });
-        }, 1000);
+        }, 2000);
     };
     const handleDelete = (recordId) => {
         Swal.fire({
