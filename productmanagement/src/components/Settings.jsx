@@ -24,8 +24,10 @@ ChartJS.register(
 
 export const SettingsPage = () => {
     return(
-    <div>
-        <Typography.Title level={4}> Dashboard</Typography.Title>
+        <div>
+            <div className="HeaderContent">
+                <Typography.Title level={4}> Dashboard</Typography.Title>
+            </div>
         <Space direction="horizontal">
                 <DashboardCard icon={<ShoppingOutlined style={{ color: "green", backgroundColor: "rgb(203 248 203)", fontSize: 27, padding: 15, borderRadius: 30, marginRight: 12 }} />} title={"Products"} value={1223} />
                 <DashboardCard icon={<UserOutlined style={{ color: "green", backgroundColor: "rgb(243 243 120)", fontSize: 27, padding: 15, borderRadius: 30, marginRight:12 }} />}  title={"Users"} value={78451 } />

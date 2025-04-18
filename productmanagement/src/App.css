@@ -14,8 +14,18 @@ body{
     flex-direction: column;
     height: 100vh;
 }
-.PageContent{
-    padding-left:12px;
+.PageContent {
+    padding-left: 12px;
+    padding-right: 12px;
+}
+.PageContent h4 {
+    margin-top: 10px;
+}
+.HeaderContent {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 10px;
 }
 .AppHeader {
     height: 50px;
