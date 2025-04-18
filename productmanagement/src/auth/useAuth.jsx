@@ -1,5 +1,6 @@
 import { createContext, useContext, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
+import Swal from 'sweetalert2'
 import { useLocalStorage } from "./useLocalStorage";
 const AuthContext = createContext();
 async function loginUser(credentials) {
@@ -21,6 +22,14 @@ export const AuthProvider = ({ children }) => {
         if (response.accessToken) {
             setUser(response.accessToken);
             navigate("/dashboard/settings");
+        } else {
+            Swal.fire({
+                title: 'Oops!',
+                text: response.message,
+                icon: 'error',
+                //timer: 2000, // milliseconds (2 seconds)
+                //showConfirmButton: false, // hides the OK button
+            });
         }
     };
 
