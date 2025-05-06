@@ -1,17 +1,21 @@
-import * as React from "react"; 
+import {React , useState} from "react"; 
 import { Button, Checkbox, Form, Input, Card } from 'antd';
 import { useAuth } from "../auth/useAuth";
 
+
 export const LoginPage = () => {
+    const [username, setUserName] = useState();
+    const [password, setPassword] = useState(); 
     const { login } = useAuth();
 
-    const onFinish = (event) => { 
+    const onFinish = (event) => {
         const data = new FormData(event.currentTarget);
         login({
-            email: data.get("email"),
-            password: data.get("password")
+            username,
+            password
         });
     };
+
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
     };
@@ -41,7 +45,7 @@ export const LoginPage = () => {
                             },
                         ]}
                     >
-                        <Input />
+                        <Input onChange={e => setUserName(e.target.value)} />
                     </Form.Item>
 
                     <Form.Item
@@ -54,7 +58,7 @@ export const LoginPage = () => {
                             },
                         ]}
                     >
-                        <Input.Password />
+                        <Input.Password onChange={e => setPassword(e.target.value)} />
                     </Form.Item>
 
                     <Form.Item name="remember" valuePropName="checked" label={null}>
@@ -73,6 +77,9 @@ export const LoginPage = () => {
         
     );
 };
+//LoginPage.propTypes = {
+//    setToken: PropTypes.func.isRequired
+//}
 
 
  

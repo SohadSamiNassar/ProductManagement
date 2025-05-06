@@ -18,7 +18,7 @@ export const ProductTable = () => {
                 message: 'Success',
                 description: m,
             });
-        }, 1000);
+        }, 2000);
     };
     const handleDelete = (recordId) => {
         Swal.fire({
@@ -130,17 +130,18 @@ export const ProductTable = () => {
    
     return (
         <>
-            {contextHolder}
-            <Typography.Title level={4}> Products</Typography.Title>
-            <Button color="primary" variant="outlined" 
-                onClick={() => {
-                    handleIdModal(null);
-                    setShow1(true);
-                }}
-            >
-                Add new Product
-            </Button>
-          
+            <div className="HeaderContent">
+                {contextHolder}
+                <Typography.Title level={4}> Products</Typography.Title>
+                <Button color="primary" variant="outlined" 
+                    onClick={() => {
+                        handleIdModal(null);
+                        setShow1(true);
+                    }}
+                >
+                    Add new Product
+                </Button>
+            </div>
             <Table columns={columns} dataSource={data} />
             {show1 && < CreateOrUpdate onCloseModal={handleCloseModal} onChangeTable={handleChangeTable} id={id} onSubmitModal={onSubmit} />}
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-
-import { PlusOutlined } from '@ant-design/icons';
+import Swal from 'sweetalert2'
+import {  UploadOutlined } from '@ant-design/icons';
 import {
     Button,
     Form,
@@ -8,16 +8,14 @@ import {
     InputNumber,
     Modal,
     Upload,
+    Image
 } from 'antd'; 
 const { TextArea } = Input;
-const normFile = (e) => {
-    if (Array.isArray(e)) {
-        return e;
-    }
-    return e?.fileList;
-};
+const key = 'updatable';
 
-export const CreateOrUpdate = ({ id, onCloseModal, onChangeTable, onSubmitModal }) => {  
+export const CreateOrUpdate = ({ id, onCloseModal, onChangeTable, onSubmitModal }) => { 
+    const [loading, setLoading] = useState(false);
+    const apiKey = '2ce826a1f14d466f552d8e8c5a0ea837'; // Replace this with your ImageBB API key
     const [productList, setProductList] = useState(JSON.parse(localStorage.getItem('products')) || []);
     const [newProduct, setNewProduct] = useState(productList.find((item) => item.key == id) || {
         key: "",
@@ -26,14 +24,52 @@ export const CreateOrUpdate = ({ id, onCloseModal, onChangeTable, onSubmitModal 
         shortDescription: "",
         price: 0,
         img: ""
-    }); 
-  
+    });  
     const handelInput = (event) => {
         const { name, value } = event.target;
         setNewProduct({ ...newProduct, [name]: value });
-        console.log(newProduct);
-    }
+    } 
+ 
+    const uploadToImageBB = async ({ file, onSuccess, onError }) => {
+        const formData = new FormData();
+        formData.append('image', file);
 
+        try {
+            setLoading(true);
+            const res = await fetch(`https://api.imgbb.com/1/upload?key=${apiKey}`, {
+                method: 'POST',
+                body: formData,
+            });
+
+            const data = await res.json();
+            if (data.success) {
+                setNewProduct({ ...newProduct, ["img"]: data.data.url });
+                Swal.fire({
+                    title: 'success',
+                    text: 'Image uploaded successfully!',
+                    icon: 'success',
+                    timer: 2000, // milliseconds (2 seconds)
+                    showConfirmButton: false, // hides the OK button
+                });
+                onSuccess("ok"); // Notify Ant Design Upload it succeeded
+            } else {
+                throw new Error('Upload failed');
+            }
+        } catch (err) {
+            console.error(err); 
+            Swal.fire({
+                title: 'Oops!',
+                text: 'Upload failed.',
+                icon: 'error',
+                timer: 2000, // milliseconds (2 seconds)
+                showConfirmButton: false, // hides the OK button
+            });
+            onError(err);
+        } finally {
+            setLoading(false);
+        }
+    };
+     
     const handleClose = () => {
         onCloseModal(); 
         setNewProduct({
@@ -88,29 +124,29 @@ export const CreateOrUpdate = ({ id, onCloseModal, onChangeTable, onSubmitModal 
                     <TextArea rows={4} name="shortDescription" value={newProduct.shortDescription} onChange={handelInput} />
                 </Form.Item>
 
-                <Form.Item label="Photo" valuePropName="fileList" getValueFromEvent={normFile}>
-                    <Upload action="/upload.do" listType="picture-card">
-                        <button
-                            style={{
-                                color: 'inherit',
-                                cursor: 'inherit',
-                                border: 0,
-                                background: 'none',
-                            }}
-                            type="button"
-                        >
-                            <PlusOutlined />
-                            <div
-                                style={{
-                                    marginTop: 8,
-                                }}
-                            >
-                                Upload
-                            </div>
-                        </button>
+                <Form.Item label="Photo">
+               
+                    <Upload
+                        customRequest={uploadToImageBB}
+                        showUploadList={false} // Hide default file list
+                        accept="image/*"
+                    >
+                        <Button icon={<UploadOutlined />} loading={loading}>
+                            Click to Upload
+                        </Button>
                     </Upload>
-                </Form.Item>
-
+                    {newProduct.img && (
+                        <div style={{ marginTop: 20 }}>
+                            <h3>Uploaded Image:</h3>
+                            <Image
+                                src={newProduct.img}
+                                alt="Uploaded"
+                                width={100}
+                                style={{ borderRadius: '8px' }}
+                            />
+                        </div>
+                    )}
+                </Form.Item> 
                 <Form.Item label="Price">
                     <InputNumber name="price" value={newProduct.price} onChange={price => handelInput({ target: { value: price, name: 'price' } })} />
                 </Form.Item>

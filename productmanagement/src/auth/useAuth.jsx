@@ -1,7 +1,16 @@
 import { createContext, useContext, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
+import Swal from 'sweetalert2'
 import { useLocalStorage } from "./useLocalStorage";
 const AuthContext = createContext();
+async function loginUser(credentials) {
+    return fetch('https://dummyjson.com/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(credentials),
+    })
+        .then(res => res.json())
+}
 
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useLocalStorage("user", null);
@@ -9,8 +18,19 @@ export const AuthProvider = ({ children }) => {
 
     // call this function when you want to authenticate the user
     const login = async (data) => {
-        setUser(data);
-        navigate("/settings");
+        const response = await loginUser(data);
+        if (response.accessToken) {
+            setUser(response.accessToken);
+            navigate("/dashboard/settings");
+        } else {
+            Swal.fire({
+                title: 'Oops!',
+                text: response.message,
+                icon: 'error',
+                //timer: 2000, // milliseconds (2 seconds)
+                //showConfirmButton: false, // hides the OK button
+            });
+        }
     };
 
     // call this function to sign out logged in user

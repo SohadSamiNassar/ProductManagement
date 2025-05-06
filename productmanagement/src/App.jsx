@@ -7,9 +7,10 @@ import { DashboardLayout } from "./components/DashboardLayout";
 import { HomeLayout } from "./components/HomeLayout";
 import "./App.css";
 
-export default function App() {
+ 
+export default function App() { 
     return (
-        <Routes>
+        <Routes> 
             <Route element={<HomeLayout />}>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/login" element={<LoginPage />} />
