@@ -1,5 +1,6 @@
 import {React , useState} from "react"; 
 import { Button, Checkbox, Form, Input, Card } from 'antd';
+import { Link } from 'react-router-dom';
 import { useAuth } from "../auth/useAuth";
 
 
@@ -35,6 +36,7 @@ export const LoginPage = () => {
                     onFinishFailed={onFinishFailed}
                     autoComplete="off"
                 >
+               
                     <Form.Item
                         label="Username"
                         name="username"
@@ -69,10 +71,19 @@ export const LoginPage = () => {
                         <Button type="primary" htmlType="submit">
                             Submit
                         </Button>
+                        <Link to="/">
+                            <Button style={{ marginLeft: '10px' }}>
+                                {"Cancel"}
+                            </Button>
+                        </Link>
                     </Form.Item>
+                    
                 </Form>
+
+
             </Card>
-            
+
+           
         </div>
         
     );

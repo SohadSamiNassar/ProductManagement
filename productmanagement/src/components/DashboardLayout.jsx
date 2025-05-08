@@ -5,6 +5,7 @@ import { AppHeader } from "./AppHeader";
 import { AppFooter } from "./AppFooter";
 import { SideMenu } from "./SideMenu";
 import { PageContent } from "./PageContent";
+import "../App.css";
 
 export const DashboardLayout = () => {
     const { user } = useAuth();
