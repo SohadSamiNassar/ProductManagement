@@ -1,13 +1,13 @@
 import { React } from "react"; 
- 
+import {  Typography } from 'antd';
+
 
 export const HomePage = () => {
 
     return (
         <>
-            <div>
-                Home
-            </div>
+            <Typography.Title level={4}> Home</Typography.Title>
+
         </>
     ); 
 };
