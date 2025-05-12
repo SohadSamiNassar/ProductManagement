@@ -1,6 +1,4 @@
-import { React } from "react";
-import { Link } from 'react-router-dom';
-import { useAuth } from "../auth/useAuth";
+import { React } from "react"; 
 import { ProfileMenu } from "../components/ProfileMenu";
 import image from "../assets/react.svg"
 import { UserOutlined } from "@ant-design/icons";
@@ -35,7 +33,8 @@ export const HomeLayout = () => {
                     defaultSelectedKeys={['/']}
                     items={[
                         { label: "Home", key: "/" },
-                        { label: "Products", key: "Product" }
+                        { label: "Products", key: "Product" },
+                        { label: "About Us", key: "About" }
                     ]}
                     style={{ flex: 1, minWidth: 0, paddingLeft: 50 }}
                 />
