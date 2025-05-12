@@ -1,12 +1,7 @@
 import { React } from "react"; 
-import image from "../assets/react.svg"
 import { useAuth } from "../auth/useAuth";
 import { Link } from 'react-router-dom';
-import {
-    SolutionOutlined,
-    PoweroffOutlined
-} from "@ant-design/icons";
-
+import { SolutionOutlined, PoweroffOutlined } from "@ant-design/icons";
 import {Menu } from 'antd';
 
 export const ProfileMenu = () => {
@@ -35,6 +30,5 @@ export const ProfileMenu = () => {
                 }
             </Menu.Item>
         </Menu>
-
     );
 }; 

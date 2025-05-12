@@ -4,10 +4,10 @@ import image from "../assets/react.svg"
 import { UserOutlined } from "@ant-design/icons";
 import { PageContent } from "../components/PageContent";
 import { useNavigate } from "react-router-dom";
+import { Layout, Menu, Avatar, Dropdown, Image } from 'antd';
+import "../index.css" 
 
-import { Breadcrumb, Layout, Menu, theme, Button, Avatar, Dropdown, Image } from 'antd';
 const { Header, Content, Footer } = Layout;
-
 
 export const HomeLayout = () => {
     const navigate = useNavigate();
@@ -43,15 +43,8 @@ export const HomeLayout = () => {
                 </Dropdown>
             </Header>
             <Content style={{ padding: '0' }}>
-                <div
-                    style={{
-                        padding: 24,
-                        minHeight: 380
-                    }}>
-
-                    <PageContent>
-                    </PageContent>
-                </div>
+                <PageContent>
+                </PageContent>
             </Content>
             <Footer style={{ textAlign: 'center' }}>
                 {new Date().getFullYear()} Created by Sohad Nassar

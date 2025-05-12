@@ -4,7 +4,7 @@ import { useOutlet } from "react-router-dom";
 export const PageContent = () => {
     const outlet = useOutlet();
     return (
-        <div className="PageContent">
+        <div>
             {outlet}
         </div>
 

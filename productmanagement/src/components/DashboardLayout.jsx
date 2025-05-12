@@ -21,7 +21,7 @@ export const DashboardLayout = () => {
                 <SideMenu>
                 </SideMenu>
 
-                <PageContent>
+                <PageContent className="PageContent">
                 </PageContent>
             </Space>
             <AppFooter />
