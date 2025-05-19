@@ -1,9 +1,10 @@
-.products{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    gap:10px;
-    height:90vh;
+.products {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    height: 100vh;
+    padding-top: 35px;
 }
 .products h1{
     color:#171717;
@@ -18,8 +19,13 @@
     background:#252525;
 
 }
-.product-item{
-    margin-top:50px;
-    display:flex;
-    gap:10px;
+.product-item {
+    display: flex;
+    gap: 15px;
+    margin-top:20px;
 }
+.item:hover {
+    transform: scale(1.05);
+    transition: 0.8s;
+}
+/*83916*/
